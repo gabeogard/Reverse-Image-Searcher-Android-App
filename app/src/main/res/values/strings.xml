@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ImageSearcherExam</string>
     <string name="please_wait">Please wait…</string>
+    <string name="search_image">search image</string>
 </resources>
