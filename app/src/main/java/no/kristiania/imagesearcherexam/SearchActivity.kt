@@ -3,10 +3,14 @@ package no.kristiania.imagesearcherexam
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -16,12 +20,20 @@ import androidx.core.content.ContextCompat
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
+import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import no.kristiania.imagesearcherexam.api.JsonResponseModel
 import no.kristiania.imagesearcherexam.databinding.ActivitySearchBinding
+import org.json.JSONArray
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.net.URI
 
 class SearchActivity : AppCompatActivity() {
@@ -30,13 +42,20 @@ class SearchActivity : AppCompatActivity() {
     private var currentSearchedImage : String? = null
     private var uploadedPic : Boolean? = null
     private var currentUrl : String? = null
+    private var responseList: List<JsonResponseModel>? = null
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 result ->
             if (result.resultCode == RESULT_OK && result.data != null){
                 currentSearchedImage = result?.data.toString()
+                val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
+                uploadImage.setImageURI(result.data?.data)
+                binding?.imgSearchHolder?.visibility = View.VISIBLE
                 uploadedPic = true
+                Log.d("WIDTH:", uploadImage.drawable.intrinsicWidth.toString())
+                Log.d("HEIGHT:", uploadImage.drawable.intrinsicHeight.toString())
+                uploadImage()
             }
         }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,20 +71,16 @@ class SearchActivity : AppCompatActivity() {
                     this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
                 Toast.makeText(this, "You need permission", Toast.LENGTH_LONG).show()
                 openGallery()
-                if (uploadedPic!!){
-                    uploadImage()
-                }
             } else{
                 openGallery()
-                if (uploadedPic!!){
-                    uploadImage()
-                }
             }
         }
     }
 
     private fun uploadImage() {
-        val uploadFile = File(currentSearchedImage!!)
+        val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
+        val f = createImageFromBitmap(getBitmapFromView(uploadImage))
+        val uploadFile = File(f)
         showProgressDialog()
         CoroutineScope(Dispatchers.IO).launch {
             AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
@@ -74,19 +89,74 @@ class SearchActivity : AppCompatActivity() {
                 .addMultipartParameter("Content-Disposition", "form-data")
                 .setPriority(Priority.HIGH)
                 .build()
-                .getAsString(object : StringRequestListener{
+                .getAsString(object : StringRequestListener {
                     override fun onResponse(response: String?) {
-                        currentUrl = response
                         Log.d("Response: ", response!!)
+                        currentUrl = response
+                        imageSearch(currentUrl!!)
+                    }
+
+                    override fun onError(anError: ANError?) {
+                        Log.e("Error:", anError.toString())
+                    }
+                })
+            cancelProgressDialog()
+        }
+    }
+
+    private fun imageSearch(currentPicUrl: String) {
+        showProgressDialog()
+        CoroutineScope(Dispatchers.IO).launch {
+            AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/bing")
+                .addQueryParameter("url", currentPicUrl)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONArray(object : JSONArrayRequestListener {
+                    override fun onResponse(response: JSONArray?) {
+                        val mapper = jacksonObjectMapper()
+                        responseList = mapper.readValue(response.toString())
+                        responseList?.forEach{
+                            println(it.image_link)
+                        }
                         cancelProgressDialog()
                     }
 
                     override fun onError(anError: ANError?) {
-                        Log.e("Something went wrong:", anError.toString())
+                        Log.e("Error", anError.toString())
                     }
 
                 })
         }
+    }
+
+    private fun createImageFromBitmap(mBitmap: Bitmap): String {
+        val result1: String
+        val bytes = ByteArrayOutputStream()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            mBitmap.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 20, bytes)
+        }else{
+            mBitmap.compress(Bitmap.CompressFormat.PNG, 20, bytes)
+        }
+        val f = File(
+            externalCacheDir?.absoluteFile.toString()
+                    + File.separator
+                    + "PP"
+                    + ".png"
+        )
+        val fo = FileOutputStream(f)
+        fo.write(bytes.toByteArray())
+        fo.close()
+
+        result1 = f.absolutePath
+        return result1
+    }
+
+    private fun getBitmapFromView(img: ImageView): Bitmap {
+        val returnedBitmap =
+            Bitmap.createBitmap(img.drawable.intrinsicWidth, img.drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        img.draw(canvas)
+        return returnedBitmap
     }
 
     private fun openGallery() {
