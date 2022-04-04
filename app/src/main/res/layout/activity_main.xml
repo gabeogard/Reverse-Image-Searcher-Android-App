@@ -6,14 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tvMain"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="search image"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/resultsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="search results"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchBtn"/>
+
+    <Button
+        android:id="@+id/savedResultsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="saved results"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/resultsBtn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
