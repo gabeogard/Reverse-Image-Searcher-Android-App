@@ -95,6 +95,11 @@ class SearchActivity : AppCompatActivity() {
 
             }
         }
+
+        binding?.viewResultsBtn?.setOnClickListener {
+            intent = Intent(this, ResultsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun saveSearchResults(dao: ResponseDAO) {
@@ -132,18 +137,18 @@ class SearchActivity : AppCompatActivity() {
                         currentUrl = response
                         //Calls imageSearch function with response String
                         imageSearch(currentUrl!!)
+                        cancelProgressDialog()
+                        Log.d("Called or not", "HEY")
                     }
 
                     override fun onError(anError: ANError?) {
                         Log.e("Error:", anError.toString())
                     }
                 })
-            cancelProgressDialog()
         }
     }
 
     private fun imageSearch(currentPicUrl: String) {
-        showProgressDialog()
         CoroutineScope(Dispatchers.IO).launch {
             AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/bing")
                 .addQueryParameter("url", currentPicUrl)
@@ -160,7 +165,9 @@ class SearchActivity : AppCompatActivity() {
                         responseEntry = ResponseEntity(
                             searchedImage = currentSearchedImage!!,
                             topResult = resultList[0].image_link)
+                        binding?.viewResultsBtn?.visibility = View.VISIBLE
                         cancelProgressDialog()
+                        Log.d("Whats going on", "called?")
                     }
 
                     override fun onError(anError: ANError?) {
