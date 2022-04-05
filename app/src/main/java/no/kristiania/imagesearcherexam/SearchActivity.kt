@@ -58,8 +58,6 @@ class SearchActivity : AppCompatActivity() {
                 uploadImage.setImageURI(result.data?.data)
                 binding?.imgSearchHolder?.visibility = View.VISIBLE
                 uploadedPic = true
-                Log.d("WIDTH:", uploadImage.drawable.intrinsicWidth.toString())
-                Log.d("HEIGHT:", uploadImage.drawable.intrinsicHeight.toString())
                 uploadImage()
             }
         }
@@ -92,7 +90,6 @@ class SearchActivity : AppCompatActivity() {
         binding?.saveResultsBtn?.setOnClickListener {
             if (responseEntry != null){
                 saveSearchResults(dao)
-
             }
         }
 

@@ -10,14 +10,14 @@
         android:id="@+id/searchBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="search image"
+        android:text="@string/search_image"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/resultsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="search results"
+        android:text="@string/search_results"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/searchBtn"/>
 
@@ -25,7 +25,7 @@
         android:id="@+id/savedResultsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="saved results"
+        android:text="@string/saved_results"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/resultsBtn"/>
 
