@@ -48,6 +48,7 @@ class SearchActivity : AppCompatActivity() {
     private var responseList: List<JsonResponseModel>? = null
     private var responseEntry: ResponseEntity? = null
 
+    //Launches gallery and sets image to invisible View
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
                 result ->
@@ -71,6 +72,10 @@ class SearchActivity : AppCompatActivity() {
 
         val dao = db.responseDao()
 
+        /**
+         * -Checks for and or asks for permission to read external storage on device
+         * -Opens gallery
+         * **/
         binding?.searchBtn?.setOnClickListener {
             val checkSelfPermission = ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -103,7 +108,11 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Uses Coroutines to launch different thread
+     * Uses Android Networking to upload to "http://api-edu.gtl.ai/"
+     * Returns response as String
+    // **/
     private fun uploadImage() {
         val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
@@ -117,9 +126,11 @@ class SearchActivity : AppCompatActivity() {
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsString(object : StringRequestListener {
+                    //response String is set to a global variable
                     override fun onResponse(response: String?) {
                         Log.d("Response: ", response!!)
                         currentUrl = response
+                        //Calls imageSearch function with response String
                         imageSearch(currentUrl!!)
                     }
 
