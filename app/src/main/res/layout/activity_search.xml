@@ -25,6 +25,13 @@
         />
 
     <Button
+        android:id="@+id/saveResultsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save results"
+        app:layout_constraintBottom_toTopOf="@+id/viewResultsBtn"/>
+
+    <Button
         android:id="@+id/viewResultsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
@@ -24,17 +25,19 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import no.kristiania.imagesearcherexam.api.JsonResponseModel
 import no.kristiania.imagesearcherexam.databinding.ActivitySearchBinding
+import no.kristiania.imagesearcherexam.roomdb.ResponseApp
+import no.kristiania.imagesearcherexam.roomdb.ResponseDAO
+import no.kristiania.imagesearcherexam.roomdb.ResponseEntity
 import org.json.JSONArray
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URI
 
 class SearchActivity : AppCompatActivity() {
     private var binding: ActivitySearchBinding? = null
@@ -43,6 +46,7 @@ class SearchActivity : AppCompatActivity() {
     private var uploadedPic : Boolean? = null
     private var currentUrl : String? = null
     private var responseList: List<JsonResponseModel>? = null
+    private var responseEntry: ResponseEntity? = null
 
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -63,6 +67,10 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        val db = (application as ResponseApp).db
+
+        val dao = db.responseDao()
+
         binding?.searchBtn?.setOnClickListener {
             val checkSelfPermission = ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -75,7 +83,26 @@ class SearchActivity : AppCompatActivity() {
                 openGallery()
             }
         }
+
+        binding?.saveResultsBtn?.setOnClickListener {
+            if (responseEntry != null){
+                saveSearchResults(dao)
+
+            }
+        }
     }
+
+    private fun saveSearchResults(dao: ResponseDAO) {
+        lifecycleScope.launch {
+            dao.insert(responseEntry!!)
+            dao.fetchAllResponses().collect {
+                for(i in it){
+                    Log.d("item: ", i.topResult)
+                }
+            }
+        }
+    }
+
 
     private fun uploadImage() {
         val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
@@ -115,9 +142,13 @@ class SearchActivity : AppCompatActivity() {
                     override fun onResponse(response: JSONArray?) {
                         val mapper = jacksonObjectMapper()
                         responseList = mapper.readValue(response.toString())
+                        val resultList : ArrayList<JsonResponseModel> = ArrayList()
                         responseList?.forEach{
-                            println(it.image_link)
+                            resultList.add(it)
                         }
+                        responseEntry = ResponseEntity(
+                            searchedImage = currentSearchedImage!!,
+                            topResult = resultList[0].image_link)
                         cancelProgressDialog()
                     }
 
