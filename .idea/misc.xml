@@ -7,10 +7,14 @@
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/activity_results.xml" value="0.2028985507246377" />
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/activity_search.xml" value="0.19427083333333334" />
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/custom_progress_dialog.xml" value="0.23550724637681159" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2903673918574008" />
+        <entry key="app/src/main/res/layout/activity_results.xml" value="0.14266304347826086" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.2721020673494628" />
+        <entry key="app/src/main/res/layout/custom_progress_dialog.xml" value="0.11667291368275011" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
