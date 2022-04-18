@@ -58,6 +58,7 @@ class SearchActivity : AppCompatActivity() {
                 uploadImage.setImageURI(result.data?.data)
                 binding?.imgSearchHolder?.visibility = View.VISIBLE
                 uploadedPic = true
+                showProgressDialog()
                 uploadImage()
             }
         }
@@ -119,11 +120,10 @@ class SearchActivity : AppCompatActivity() {
         val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
         val uploadFile = File(f)
-        showProgressDialog()
         CoroutineScope(Dispatchers.IO).launch {
             AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
                 .addMultipartFile("image", uploadFile)
-                .addMultipartParameter("Content-Type", "image/jpeg")
+                .addMultipartParameter("Content-Type", "image/png")
                 .addMultipartParameter("Content-Disposition", "form-data")
                 .setPriority(Priority.HIGH)
                 .build()
@@ -134,12 +134,13 @@ class SearchActivity : AppCompatActivity() {
                         currentUrl = response
                         //Calls imageSearch function with response String
                         imageSearch(currentUrl!!)
-                        cancelProgressDialog()
                         Log.d("Called or not", "HEY")
                     }
 
                     override fun onError(anError: ANError?) {
                         Log.e("Error:", anError.toString())
+                        cancelProgressDialog()
+                        Toast.makeText(this@SearchActivity, "Failed to upload image - please try again!", Toast.LENGTH_LONG).show()
                     }
                 })
         }
@@ -153,22 +154,34 @@ class SearchActivity : AppCompatActivity() {
                 .build()
                 .getAsJSONArray(object : JSONArrayRequestListener {
                     override fun onResponse(response: JSONArray?) {
+                        Log.d("Response: ", currentPicUrl)
                         val mapper = jacksonObjectMapper()
                         responseList = mapper.readValue(response.toString())
                         val resultList : ArrayList<JsonResponseModel> = ArrayList()
-                        responseList?.forEach{
-                            resultList.add(it)
+                        if(responseList!!.isNotEmpty()){
+                            responseList?.forEach{
+                                resultList.add(it)
+                            }
+                            responseEntry = ResponseEntity(
+                                searchedImage = currentSearchedImage!!,
+                                topResult = resultList[0].image_link)
+                        }else{
+                            responseEntry = ResponseEntity(
+                                searchedImage = currentSearchedImage!!,
+                                topResult = "NO RESULTS RETURNED"
+                            )
+                            Toast.makeText(this@SearchActivity, "No similar images found - Server might be facing some" +
+                                    " issues. Please try again!", Toast.LENGTH_LONG).show()
                         }
-                        responseEntry = ResponseEntity(
-                            searchedImage = currentSearchedImage!!,
-                            topResult = resultList[0].image_link)
                         binding?.viewResultsBtn?.visibility = View.VISIBLE
                         cancelProgressDialog()
-                        Log.d("Whats going on", "called?")
+                        Log.d("Image link: ", responseEntry?.topResult.toString())
+                        Log.d("Image link: ", responseEntry?.searchedImage.toString())
                     }
 
                     override fun onError(anError: ANError?) {
                         Log.e("Error", anError.toString())
+                        cancelProgressDialog()
                     }
 
                 })

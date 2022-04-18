@@ -21,7 +21,8 @@ abstract class ResponseDatabase : RoomDatabase() {
                         context.applicationContext,
                         ResponseDatabase::class.java,
                         "response-db"
-                    ).build()
+                    ).fallbackToDestructiveMigration()
+                        .build()
 
                     INSTANCE = instance
                 }
