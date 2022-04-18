@@ -5,4 +5,6 @@
     <string name="view_results">view results</string>
     <string name="saved_results">saved results</string>
     <string name="search_results">search results</string>
+    <string name="upload_from_gallery">Upload from gallery</string>
+    <string name="choose_from_gallery">choose from gallery</string>
 </resources>

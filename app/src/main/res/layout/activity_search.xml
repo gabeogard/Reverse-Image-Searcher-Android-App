@@ -9,15 +9,28 @@
 
 
     <Button
-        android:id="@+id/searchBtn"
+        android:id="@+id/chooseBtn"
         android:layout_width="114dp"
         android:layout_height="88dp"
         android:layout_marginTop="60dp"
         android:backgroundTint="#e06f1f"
-        android:text="@string/search_image"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/choose_from_gallery"
+        app:layout_constraintEnd_toStartOf="@id/uploadBtn"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#9d5716"
+        app:strokeWidth="4dp" />
+    <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="114dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="#e06f1f"
+        android:text="@string/upload_from_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toEndOf="@id/chooseBtn"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#9d5716"
         app:strokeWidth="4dp" />
@@ -27,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/searchBtn"
+        app:layout_constraintTop_toBottomOf="@+id/uploadBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

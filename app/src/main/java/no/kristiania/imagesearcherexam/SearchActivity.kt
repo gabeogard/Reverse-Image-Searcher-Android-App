@@ -25,10 +25,8 @@ import com.androidnetworking.interfaces.JSONArrayRequestListener
 import com.androidnetworking.interfaces.StringRequestListener
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import no.kristiania.imagesearcherexam.api.JsonResponseModel
 import no.kristiania.imagesearcherexam.databinding.ActivitySearchBinding
 import no.kristiania.imagesearcherexam.roomdb.ResponseApp
@@ -58,8 +56,6 @@ class SearchActivity : AppCompatActivity() {
                 uploadImage.setImageURI(result.data?.data)
                 binding?.imgSearchHolder?.visibility = View.VISIBLE
                 uploadedPic = true
-                showProgressDialog()
-                uploadImage()
             }
         }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +71,7 @@ class SearchActivity : AppCompatActivity() {
          * -Checks for and or asks for permission to read external storage on device
          * -Opens gallery
          * **/
-        binding?.searchBtn?.setOnClickListener {
+        binding?.chooseBtn?.setOnClickListener {
             val checkSelfPermission = ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
             if (checkSelfPermission != PackageManager.PERMISSION_GRANTED){
@@ -85,6 +81,18 @@ class SearchActivity : AppCompatActivity() {
                 openGallery()
             } else{
                 openGallery()
+            }
+        }
+
+        binding?.uploadBtn?.setOnClickListener {
+            it.isEnabled = false
+            val resultUrl: Deferred<String?> = GlobalScope.async {
+                uploadImage()
+            }
+
+            GlobalScope.launch(Dispatchers.Main) {
+                resultUrl.await()?.let { it1 -> imageSearch(it1) }
+                it.isEnabled = true
             }
         }
 
@@ -116,34 +124,24 @@ class SearchActivity : AppCompatActivity() {
      * Uses Android Networking to upload to "http://api-edu.gtl.ai/"
      * Returns response as String
     // **/
-    private fun uploadImage() {
+    private fun uploadImage() : String?{
+        var uploadUrl : String? = null
         val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
         val uploadFile = File(f)
-        CoroutineScope(Dispatchers.IO).launch {
-            AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
+        val request = AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
                 .addMultipartFile("image", uploadFile)
                 .addMultipartParameter("Content-Type", "image/png")
                 .addMultipartParameter("Content-Disposition", "form-data")
                 .setPriority(Priority.HIGH)
                 .build()
-                .getAsString(object : StringRequestListener {
-                    //response String is set to a global variable
-                    override fun onResponse(response: String?) {
-                        Log.d("Response: ", response!!)
-                        currentUrl = response
-                        //Calls imageSearch function with response String
-                        imageSearch(currentUrl!!)
-                        Log.d("Called or not", "HEY")
-                    }
-
-                    override fun onError(anError: ANError?) {
-                        Log.e("Error:", anError.toString())
-                        cancelProgressDialog()
-                        Toast.makeText(this@SearchActivity, "Failed to upload image - please try again!", Toast.LENGTH_LONG).show()
-                    }
-                })
+        val response = request.executeForString()
+        if(response.isSuccess){
+            uploadUrl = response.result.toString()
+        }else{
+            Log.d("Error", response.error.toString())
         }
+        return uploadUrl
     }
 
     private fun imageSearch(currentPicUrl: String) {
