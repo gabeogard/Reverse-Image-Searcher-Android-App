@@ -4,63 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe3c8"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/searchBtn"
-        android:backgroundTint="#e06f1f"
-        app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
-        android:layout_width="114dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/search_image"
-        app:layout_constraintEnd_toStartOf="@+id/resultsBtn"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.346" />
 
     <Button
         android:id="@+id/resultsBtn"
-        android:backgroundTint="#e06f1f"
-        app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
-        android:layout_width="114dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/search_results"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/searchBtn" />
 
     <Button
         android:id="@+id/savedResultsBtn"
-        android:backgroundTint="#e06f1f"
-        app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
-        android:layout_width="114dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="200dp"
-        android:text="@string/saved_results"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toEndOf="@+id/resultsBtn"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:rotationX="40"
-        android:text="Image Searcher"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/resultsBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="10dp"
+        android:text="@string/saved_results"
+        app:layout_constraintTop_toBottomOf="@id/resultsBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

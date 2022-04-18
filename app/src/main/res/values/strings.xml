@@ -5,4 +5,7 @@
     <string name="view_results">view results</string>
     <string name="saved_results">saved results</string>
     <string name="search_results">search results</string>
+    <string name="todo">TODO</string>
+    <string name="save_results">Save results</string>
+
 </resources>
