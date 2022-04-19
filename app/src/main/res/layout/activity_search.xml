@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,36 +9,42 @@
 
 
     <Button
-        android:id="@+id/searchBtn"
+        android:id="@+id/chooseBtn"
         android:layout_width="114dp"
         android:layout_height="88dp"
         android:layout_marginTop="60dp"
         android:backgroundTint="#e06f1f"
-        android:text="@string/search_image"
-        android:textColor="#212121"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/choose_from_gallery"
+        app:layout_constraintEnd_toStartOf="@id/uploadBtn"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
-        tools:ignore="TextContrastCheck" />
+        app:strokeWidth="4dp" />
+    <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="114dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="#e06f1f"
+        android:text="@string/upload_from_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toEndOf="@id/chooseBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#9d5716"
+        app:strokeWidth="4dp" />
 
     <ImageView
         android:id="@+id/imgSearchHolder"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/border_image"
-        android:cropToPadding="true"
-        android:padding="1dp"
-        android:scaleType="centerCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/saveResultsBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/uploadBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBtn"
-        app:layout_constraintVertical_bias="0.336" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <Button
         android:id="@+id/saveResultsBtn"
@@ -47,8 +52,7 @@
         android:layout_height="88dp"
         android:layout_marginTop="200dp"
         android:backgroundTint="#e06f1f"
-        android:text="@string/save_results"
-        android:textColor="#212121"
+        android:text="Save results"
         app:layout_constraintBottom_toTopOf="@+id/viewResultsBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -56,8 +60,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.873"
         app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
-        tools:ignore="TextContrastCheck" />
+        app:strokeWidth="4dp" />
 
     <Button
         android:id="@+id/viewResultsBtn"
