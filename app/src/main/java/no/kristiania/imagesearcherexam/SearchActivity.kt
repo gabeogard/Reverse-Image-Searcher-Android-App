@@ -41,7 +41,7 @@ class SearchActivity : AppCompatActivity() {
     private var binding: ActivitySearchBinding? = null
     private var customProgressDialog : Dialog? = null
     private var currentSearchedImage : String? = null
-    private var uploadedPic : Boolean? = null
+    private var uploadedPic = false
     private var responseList: List<JsonResponseModel>? = null
     private var responseEntry: ResponseEntity? = null
 
@@ -55,6 +55,7 @@ class SearchActivity : AppCompatActivity() {
                 uploadImage.setImageURI(result.data?.data)
                 binding?.imgSearchHolder?.visibility = View.VISIBLE
                 uploadedPic = true
+                binding?.uploadBtn?.isEnabled = true
             }
         }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,17 +85,18 @@ class SearchActivity : AppCompatActivity() {
         }
 
         binding?.uploadBtn?.setOnClickListener {
-            it.isEnabled = false
-            showProgressDialog()
-            val resultUrl: Deferred<String?> = GlobalScope.async {
-                uploadImage()
-            }
+            if(uploadedPic){
+                showProgressDialog()
+                val resultUrl: Deferred<String?> = GlobalScope.async {
+                    uploadImage()
+                }
 
-            GlobalScope.launch(Dispatchers.Main) {
-                resultUrl.await()?.let { it1 -> imageSearch(it1) }
-                it.isEnabled = true
+                GlobalScope.launch(Dispatchers.Main) {
+                    resultUrl.await()?.let { it1 -> imageSearch(it1) }
+                    it.isEnabled = true
+                }
+                it.isEnabled = false
             }
-
         }
 
         binding?.saveResultsBtn?.setOnClickListener {
