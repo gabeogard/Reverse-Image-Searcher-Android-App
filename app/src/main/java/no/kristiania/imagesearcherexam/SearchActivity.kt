@@ -45,6 +45,8 @@ class SearchActivity : AppCompatActivity() {
     private var responseList: List<JsonResponseModel>? = null
     private var responseEntry: ResponseEntity? = null
 
+
+
     //Launches gallery and sets image to invisible View
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -237,4 +239,6 @@ class SearchActivity : AppCompatActivity() {
             customProgressDialog = null
         }
     }
+
+
 }

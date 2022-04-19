@@ -9,6 +9,9 @@ import no.kristiania.imagesearcherexam.databinding.ActivityResultsBinding
 import java.io.IOException
 import java.net.URL
 
+
+
+
 class ResultsActivity : AppCompatActivity() {
     private var binding : ActivityResultsBinding? = null
     @DelicateCoroutinesApi
@@ -23,7 +26,7 @@ class ResultsActivity : AppCompatActivity() {
             urlImage.toBitmap()
         }
         GlobalScope.launch(Dispatchers.Main) {
-            binding?.resultIv?.setImageBitmap(result.await())
+            binding?.image1?.setImageBitmap(result.await())
         }
     }
 
@@ -37,3 +40,5 @@ private fun URL.toBitmap(): Bitmap? {
         null
     }
 }
+
+
