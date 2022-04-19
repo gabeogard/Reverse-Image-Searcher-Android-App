@@ -42,7 +42,6 @@ class SearchActivity : AppCompatActivity() {
     private var customProgressDialog : Dialog? = null
     private var currentSearchedImage : String? = null
     private var uploadedPic : Boolean? = null
-    private var currentUrl : String? = null
     private var responseList: List<JsonResponseModel>? = null
     private var responseEntry: ResponseEntity? = null
 
