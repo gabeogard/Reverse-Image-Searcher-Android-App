@@ -53,21 +53,26 @@
         android:layout_marginTop="200dp"
         android:backgroundTint="#e06f1f"
         android:text="Save results"
-        app:layout_constraintBottom_toTopOf="@+id/viewResultsBtn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/viewResultsBtn"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.873"
         app:strokeColor="#9d5716"
         app:strokeWidth="4dp" />
 
     <Button
         android:id="@+id/viewResultsBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="114dp"
+        android:layout_height="88dp"
         android:text="@string/view_results"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/saveResultsBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeColor="#9d5716"
+        android:backgroundTint="#e06f1f"
+        app:strokeWidth="4dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
