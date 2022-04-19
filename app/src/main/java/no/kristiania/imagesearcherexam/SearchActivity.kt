@@ -85,6 +85,7 @@ class SearchActivity : AppCompatActivity() {
 
         binding?.uploadBtn?.setOnClickListener {
             it.isEnabled = false
+            showProgressDialog()
             val resultUrl: Deferred<String?> = GlobalScope.async {
                 uploadImage()
             }
@@ -93,6 +94,7 @@ class SearchActivity : AppCompatActivity() {
                 resultUrl.await()?.let { it1 -> imageSearch(it1) }
                 it.isEnabled = true
             }
+
         }
 
         binding?.saveResultsBtn?.setOnClickListener {
@@ -162,6 +164,7 @@ class SearchActivity : AppCompatActivity() {
                             responseEntry = ResponseEntity(
                                 searchedImage = currentSearchedImage!!,
                                 topResult = resultList[0].image_link)
+                            cancelProgressDialog()
                         }else{
                             responseEntry = ResponseEntity(
                                 searchedImage = currentSearchedImage!!,
@@ -171,9 +174,9 @@ class SearchActivity : AppCompatActivity() {
                                     " issues. Please try again!", Toast.LENGTH_LONG).show()
                         }
                         binding?.viewResultsBtn?.visibility = View.VISIBLE
-                        cancelProgressDialog()
                         Log.d("Image link: ", responseEntry?.topResult.toString())
                         Log.d("Image link: ", responseEntry?.searchedImage.toString())
+                        cancelProgressDialog()
                     }
 
                     override fun onError(anError: ANError?) {

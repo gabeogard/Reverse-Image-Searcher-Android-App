@@ -14,7 +14,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/please_wait"
+        android:text="@string/this_might_take_a_minute"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 

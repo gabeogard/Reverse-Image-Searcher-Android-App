@@ -7,4 +7,5 @@
     <string name="search_results">search results</string>
     <string name="upload_from_gallery">Upload from gallery</string>
     <string name="choose_from_gallery">choose from gallery</string>
+    <string name="this_might_take_a_minute">This might take a minute...</string>
 </resources>
