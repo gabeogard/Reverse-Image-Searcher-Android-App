@@ -148,7 +148,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun imageSearch(currentPicUrl: String) {
-        CoroutineScope(Dispatchers.IO).launch {
             AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/bing")
                 .addQueryParameter("url", currentPicUrl)
                 .setPriority(Priority.HIGH)
@@ -187,7 +186,7 @@ class SearchActivity : AppCompatActivity() {
                     }
 
                 })
-        }
+
     }
 
     private fun createImageFromBitmap(mBitmap: Bitmap): String {

@@ -16,24 +16,12 @@
         android:layout_height="88dp"
         android:layout_marginTop="200dp"
         android:text="@string/search_image"
-        app:layout_constraintEnd_toStartOf="@+id/resultsBtn"
+        app:layout_constraintEnd_toStartOf="@+id/savedResultsBtn"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/resultsBtn"
-        android:backgroundTint="#e06f1f"
-        app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
-        android:layout_width="114dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="200dp"
-        android:text="@string/search_results"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/savedResultsBtn"
@@ -46,7 +34,7 @@
         android:text="@string/saved_results"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
-        app:layout_constraintStart_toEndOf="@+id/resultsBtn"
+        app:layout_constraintStart_toEndOf="@id/searchBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -58,7 +46,6 @@
         android:textColor="@color/design_default_color_on_secondary"
         android:textSize="50sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/resultsBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
