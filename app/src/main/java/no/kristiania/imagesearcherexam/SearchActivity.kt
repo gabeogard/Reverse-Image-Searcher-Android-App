@@ -114,11 +114,6 @@ class SearchActivity : AppCompatActivity() {
     private fun saveSearchResults(dao: ResponseDAO) {
         lifecycleScope.launch {
             dao.insert(responseEntry!!)
-            dao.fetchAllResponses().collect {
-                for(i in it){
-                    Log.d("item: ", i.topResult)
-                }
-            }
         }
     }
 
@@ -148,7 +143,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun imageSearch(currentPicUrl: String) {
-            AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/bing")
+            AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/tineye")
                 .addQueryParameter("url", currentPicUrl)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -164,19 +159,22 @@ class SearchActivity : AppCompatActivity() {
                             }
                             responseEntry = ResponseEntity(
                                 searchedImage = currentSearchedImage!!,
-                                topResult = resultList[0].image_link)
+                                resultOne = resultList[0].image_link,
+                                resultTwo = resultList[1].image_link,
+                                resultThree = resultList[2].image_link)
                             cancelProgressDialog()
                         }else{
                             responseEntry = ResponseEntity(
                                 searchedImage = currentSearchedImage!!,
-                                topResult = "NO RESULTS RETURNED"
+                                resultOne = "NO RESULTS RETURNED",
+                                resultTwo = "NO RESULTS RETURNED",
+                                resultThree = "NO RESULTS RETURNED"
                             )
                             Toast.makeText(this@SearchActivity, "No similar images found - Server might be facing some" +
                                     " issues. Please try again!", Toast.LENGTH_LONG).show()
                         }
                         binding?.viewResultsBtn?.visibility = View.VISIBLE
-                        Log.d("Image link: ", responseEntry?.topResult.toString())
-                        Log.d("Image link: ", responseEntry?.searchedImage.toString())
+                        Log.d("Image link: ", responseEntry?.resultOne.toString())
                         cancelProgressDialog()
                     }
 
