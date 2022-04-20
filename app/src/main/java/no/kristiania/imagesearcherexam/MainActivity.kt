@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
 
-
         binding?.searchBtn?.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
