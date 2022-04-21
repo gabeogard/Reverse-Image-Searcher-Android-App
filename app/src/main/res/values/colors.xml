@@ -10,4 +10,5 @@
     <color name="buttonColor">#e06f1f</color>
     <color name="buttonBorderColor">#9d5716</color>
     <color name="backgroundColor">#ffe3c8</color>
+    <color name="salmon">#D5938E</color>
 </resources>
