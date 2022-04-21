@@ -2,9 +2,11 @@ package no.kristiania.imagesearcherexam
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import no.kristiania.imagesearcherexam.databinding.ActivityResultsBinding
@@ -15,7 +17,7 @@ import java.net.URL
 
 class ResultsActivity : AppCompatActivity() {
     private var binding : ActivityResultsBinding? = null
-    @DelicateCoroutinesApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityResultsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -33,11 +35,23 @@ class ResultsActivity : AppCompatActivity() {
             dao.getList()
         }
 
-        GlobalScope.launch(Dispatchers.Main) {
-            binding?.resultIv?.setImageBitmap(result.await())
+        GlobalScope.launch(Dispatchers.Main){
+            setUpList(resultList.await())
         }
 
 
+    }
+
+    private fun setUpList(list: ArrayList<ResultItem>?) {
+        if(!list.isNullOrEmpty()) {
+            val itemAdapter = ResultItemAdapter(list)
+            binding?.rvResults?.adapter = itemAdapter
+            binding?.rvResults?.layoutManager = LinearLayoutManager(this)
+            binding?.rvResults?.visibility = View.VISIBLE
+        }else{
+            binding?.rvResults?.visibility = View.GONE
+            Toast.makeText(this, "No data stored, try again later", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

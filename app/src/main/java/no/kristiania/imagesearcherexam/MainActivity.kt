@@ -21,5 +21,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
+        binding?.savedResultsBtn?.setOnClickListener {
+            val intent = Intent(this, ResultsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
