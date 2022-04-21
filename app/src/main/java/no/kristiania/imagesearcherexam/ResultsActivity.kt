@@ -25,18 +25,15 @@ class ResultsActivity : AppCompatActivity() {
 
         val dao = (application as ResponseApp).db.responseDao()
 
-        val url = "https://th.bing.com/th/id/OIP.vRPe7z_28WfbewcA5u4aNQHaHa?pid=ImgDet&w=211&h=211&c=7"
-        val urlImage = URL(url)
-        val result : Deferred<Bitmap?> = GlobalScope.async {
-            urlImage.toBitmap()
-        }
 
         val resultList : Deferred<ArrayList<ResultItem>?> = GlobalScope.async {
             dao.getList()
         }
 
+
         GlobalScope.launch(Dispatchers.Main){
-            setUpList(resultList.await())
+            val list : ArrayList<ResultItem> = resultList.await()!!
+            setUpList(list)
         }
 
 
