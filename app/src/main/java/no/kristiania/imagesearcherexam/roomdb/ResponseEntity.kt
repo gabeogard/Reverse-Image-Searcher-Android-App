@@ -13,9 +13,9 @@ data class ResponseEntity (
     @ColumnInfo(name = "Original Image")
     val searchedImage: String = "",
     @ColumnInfo(name = "result-one")
-    val resultOne: String = "",
+    val resultOne: String? = "",
     @ColumnInfo(name = "result-two")
-    val resultTwo: String = "",
+    val resultTwo: String? = "",
     @ColumnInfo(name = "result-three")
-    val resultThree: String = ""
+    val resultThree: String? = ""
 )

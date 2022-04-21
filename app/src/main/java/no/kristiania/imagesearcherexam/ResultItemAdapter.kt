@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 
-class ResultItemAdapter(private val items: ArrayList<ResultItem>):
+class ResultItemAdapter(private val items: List<ResultItem>):
     RecyclerView.Adapter<ResultItemAdapter.ViewHolder>() {
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view){

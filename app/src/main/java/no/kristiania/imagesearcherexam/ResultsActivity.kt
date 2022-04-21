@@ -3,20 +3,22 @@ package no.kristiania.imagesearcherexam
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import no.kristiania.imagesearcherexam.databinding.ActivityResultsBinding
 import no.kristiania.imagesearcherexam.roomdb.ResponseApp
 import no.kristiania.imagesearcherexam.roomdb.ResponseDAO
+import no.kristiania.imagesearcherexam.roomdb.ResponseEntity
 import java.io.IOException
 import java.net.URL
 
 class ResultsActivity : AppCompatActivity() {
-    private var binding : ActivityResultsBinding? = null
+    private var binding: ActivityResultsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityResultsBinding.inflate(layoutInflater)
@@ -26,26 +28,27 @@ class ResultsActivity : AppCompatActivity() {
         val dao = (application as ResponseApp).db.responseDao()
 
 
-        val resultList : Deferred<ArrayList<ResultItem>?> = GlobalScope.async {
+        val resultList: Deferred<List<ResultItem>> = GlobalScope.async {
             dao.getList()
         }
 
 
-        GlobalScope.launch(Dispatchers.Main){
-            val list : ArrayList<ResultItem> = resultList.await()!!
+        GlobalScope.launch(Dispatchers.Main) {
+            val list: List<ResultItem> = resultList.await()
+            Log.d("Empty", list.toString())
             setUpList(list)
         }
 
 
     }
 
-    private fun setUpList(list: ArrayList<ResultItem>?) {
-        if(!list.isNullOrEmpty()) {
+    private fun setUpList(list: List<ResultItem>) {
+        if (list.isNotEmpty()) {
             val itemAdapter = ResultItemAdapter(list)
             binding?.rvResults?.adapter = itemAdapter
             binding?.rvResults?.layoutManager = LinearLayoutManager(this)
             binding?.rvResults?.visibility = View.VISIBLE
-        }else{
+        } else {
             binding?.rvResults?.visibility = View.GONE
             Toast.makeText(this, "No data stored, try again later", Toast.LENGTH_SHORT).show()
         }
@@ -54,27 +57,22 @@ class ResultsActivity : AppCompatActivity() {
 
 }
 
-private suspend fun ResponseDAO.getList(): ArrayList<ResultItem>? {
-    val list : ArrayList<ResultItem>? = null
-    fetchAllResponses().collect {
-        for (i in it){
-            val urlOne = URL(i.resultOne)
-            val urlTwo = URL(i.resultTwo)
-            val urlThree = URL(i.resultThree)
-            val resultOne : Bitmap? = urlOne.toBitmap()
-            val resultTwo : Bitmap? = urlTwo.toBitmap()
-            val resultThree : Bitmap? = urlThree.toBitmap()
-            val resultItem = ResultItem(i.searchedImage, resultOne, resultTwo, resultThree)
-            list?.add(resultItem)
+private suspend fun ResponseDAO.getList(): List<ResultItem> =
+    fetchAllResponses().flatMapConcat { responseList ->
+        responseList.asFlow().map { response ->
+            if (!response.resultOne.isNullOrEmpty()){
+                val urlOne = URL(response.resultOne)
+                val urlTwo = URL(response.resultTwo)
+                val urlThree = URL(response.resultThree)
+                val resultOne: Bitmap? = urlOne.toBitmap()
+                val resultTwo: Bitmap? = urlTwo.toBitmap()
+                val resultThree: Bitmap? = urlThree.toBitmap()
+                ResultItem(response.searchedImage,resultOne,resultTwo,resultThree)
+            }else{
+                ResultItem(response.searchedImage, null, null, null)
+            }
         }
-    }
-    return list
-}
+    }.toList()
 
-private fun URL.toBitmap(): Bitmap? {
-    return try {
-        BitmapFactory.decodeStream(openStream())
-    }catch (e: IOException){
-        null
-    }
-}
+
+private fun URL.toBitmap(): Bitmap? = kotlin.runCatching { BitmapFactory.decodeStream(openStream()) }.getOrNull()

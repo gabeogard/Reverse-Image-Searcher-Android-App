@@ -37,25 +37,25 @@ import java.io.FileOutputStream
 
 class SearchActivity : AppCompatActivity() {
     private var binding: ActivitySearchBinding? = null
-    private var customProgressDialog : Dialog? = null
-    private var currentSearchedImage : String? = null
+    private var customProgressDialog: Dialog? = null
+    private var currentSearchedImage: String? = null
     private var uploadedPic = false
     private var responseList: List<JsonResponseModel>? = null
     private var responseEntry: ResponseEntity? = null
 
     //Launches gallery and sets image to invisible View
     private val openGalleryLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-                result ->
-            if (result.resultCode == RESULT_OK && result.data != null){
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
                 currentSearchedImage = result?.data.toString()
-                val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
+                val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
                 uploadImage.setImageURI(result.data?.data)
                 binding?.imgSearchHolder?.visibility = View.VISIBLE
                 uploadedPic = true
                 binding?.uploadBtn?.isEnabled = true
             }
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -71,26 +71,34 @@ class SearchActivity : AppCompatActivity() {
          * **/
         binding?.chooseBtn?.setOnClickListener {
             val checkSelfPermission = ContextCompat.checkSelfPermission(
-                this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            if (checkSelfPermission != PackageManager.PERMISSION_GRANTED){
+                this, android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
-                    this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                    this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1
+                )
                 Toast.makeText(this, "You need permission", Toast.LENGTH_LONG).show()
                 openGallery()
-            } else{
+            } else {
                 openGallery()
             }
         }
 
         binding?.uploadBtn?.setOnClickListener {
-            if(uploadedPic){
+            if (uploadedPic) {
                 showProgressDialog()
-                val resultUrl: Deferred<String?> = GlobalScope.async {
+
+                val resultUrl: Deferred<String> = GlobalScope.async {
                     uploadImage()
                 }
 
+
                 GlobalScope.launch(Dispatchers.Main) {
-                    resultUrl.await()?.let { it1 -> imageSearch(it1) }
+
+                    resultUrl.await().run {
+                        Log.d("THIS", this)
+                        imageSearch(this)
+                    }
                     it.isEnabled = true
                 }
                 it.isEnabled = false
@@ -98,7 +106,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         binding?.saveResultsBtn?.setOnClickListener {
-            if (responseEntry != null){
+            if (responseEntry != null) {
                 saveSearchResults(dao)
             }
         }
@@ -120,68 +128,66 @@ class SearchActivity : AppCompatActivity() {
      * Uses Android Networking to upload to "http://api-edu.gtl.ai/"
      * Returns response as String
     // **/
-    private fun uploadImage() : String?{
-        var uploadUrl : String? = null
-        val uploadImage : ImageView = findViewById(R.id.imgSearchHolder)
+    private fun uploadImage(): String {
+        val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
         val uploadFile = File(f)
-        val request = AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
-                .addMultipartFile("image", uploadFile)
-                .addMultipartParameter("Content-Type", "image/png")
-                .addMultipartParameter("Content-Disposition", "form-data")
-                .setPriority(Priority.HIGH)
-                .build()
-        val response = request.executeForString()
-        if(response.isSuccess){
-            uploadUrl = response.result.toString()
-        }else{
-            Log.d("Error", response.error.toString())
-        }
-        return uploadUrl
+        return AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
+            .addMultipartFile("image", uploadFile)
+            .addMultipartParameter("Content-Type", "image/png")
+            .addMultipartParameter("Content-Disposition", "form-data")
+            .setPriority(Priority.HIGH)
+            .build()
+            .executeForString().result.toString()
     }
 
     private fun imageSearch(currentPicUrl: String) {
-            AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/tineye")
-                .addQueryParameter("url", currentPicUrl)
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONArray(object : JSONArrayRequestListener {
-                    override fun onResponse(response: JSONArray?) {
-                        Log.d("Response: ", currentPicUrl)
-                        val mapper = jacksonObjectMapper()
-                        responseList = mapper.readValue(response.toString())
-                        val resultList : ArrayList<JsonResponseModel> = ArrayList()
-                        if(responseList!!.isNotEmpty()){
-                            responseList?.forEach{
-                                resultList.add(it)
-                            }
-                            responseEntry = ResponseEntity(
-                                searchedImage = currentSearchedImage!!,
-                                resultOne = resultList[0].image_link,
-                                resultTwo = resultList[1].image_link,
-                                resultThree = resultList[2].image_link)
-                            cancelProgressDialog()
-                        }else{
-                            responseEntry = ResponseEntity(
-                                searchedImage = currentSearchedImage!!,
-                                resultOne = "NO RESULTS RETURNED",
-                                resultTwo = "NO RESULTS RETURNED",
-                                resultThree = "NO RESULTS RETURNED"
-                            )
-                            Toast.makeText(this@SearchActivity, "No similar images found - Server might be facing some" +
-                                    " issues. Please try again!", Toast.LENGTH_LONG).show()
+        AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/tineye")
+            .addQueryParameter("url", currentPicUrl)
+            .setPriority(Priority.HIGH)
+            .build()
+            .getAsJSONArray(object : JSONArrayRequestListener {
+                override fun onResponse(response: JSONArray?) {
+                    Log.d("Response: ", currentPicUrl)
+                    val mapper = jacksonObjectMapper()
+                    responseList = mapper.readValue(response.toString())
+                    val resultList: ArrayList<JsonResponseModel> = ArrayList()
+                    if (responseList!!.isNotEmpty()) {
+                        responseList?.forEach {
+                            resultList.add(it)
                         }
-                        binding?.viewResultsBtn?.visibility = View.VISIBLE
-                        Log.d("Image link: ", responseEntry?.resultOne.toString())
+                        responseEntry = ResponseEntity(
+                            searchedImage = currentSearchedImage!!,
+                            resultOne = resultList[0].image_link,
+                            resultTwo = resultList[1].image_link,
+                            resultThree = resultList[2].image_link
+                        )
                         cancelProgressDialog()
+                    } else {
+                        responseEntry = ResponseEntity(
+                            searchedImage = currentSearchedImage!!,
+                            resultOne = null,
+                            resultTwo = null,
+                            resultThree = null
+                        )
+                        Toast.makeText(
+                            this@SearchActivity,
+                            "No similar images found - Server might be facing some" +
+                                    " issues. Please try again!",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
+                    binding?.viewResultsBtn?.visibility = View.VISIBLE
+                    Log.d("Image link: ", responseEntry?.resultOne.toString())
+                    cancelProgressDialog()
+                }
 
-                    override fun onError(anError: ANError?) {
-                        Log.e("Error", anError.toString())
-                        cancelProgressDialog()
-                    }
+                override fun onError(anError: ANError?) {
+                    Log.e("Error", anError.toString())
+                    cancelProgressDialog()
+                }
 
-                })
+            })
 
     }
 
@@ -190,7 +196,7 @@ class SearchActivity : AppCompatActivity() {
         val bytes = ByteArrayOutputStream()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             mBitmap.compress(Bitmap.CompressFormat.WEBP_LOSSLESS, 20, bytes)
-        }else{
+        } else {
             mBitmap.compress(Bitmap.CompressFormat.PNG, 20, bytes)
         }
         val f = File(
@@ -209,7 +215,11 @@ class SearchActivity : AppCompatActivity() {
 
     private fun getBitmapFromView(img: ImageView): Bitmap {
         val returnedBitmap =
-            Bitmap.createBitmap(img.drawable.intrinsicWidth, img.drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+            Bitmap.createBitmap(
+                img.drawable.intrinsicWidth,
+                img.drawable.intrinsicHeight,
+                Bitmap.Config.ARGB_8888
+            )
         val canvas = Canvas(returnedBitmap)
         img.draw(canvas)
         return returnedBitmap
@@ -228,7 +238,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun cancelProgressDialog() {
-        if(customProgressDialog != null){
+        if (customProgressDialog != null) {
             customProgressDialog?.dismiss()
             customProgressDialog = null
         }
