@@ -13,26 +13,26 @@
         android:layout_width="114dp"
         android:layout_height="88dp"
         android:layout_marginTop="60dp"
-        android:backgroundTint="#e06f1f"
+        android:backgroundTint="@color/buttonColor"
         android:text="@string/choose_from_gallery"
         app:layout_constraintEnd_toStartOf="@id/uploadBtn"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#9d5716"
+        app:strokeColor="@color/buttonBorderColor"
         app:strokeWidth="4dp" />
     <Button
         android:id="@+id/uploadBtn"
         android:layout_width="114dp"
         android:layout_height="88dp"
         android:layout_marginTop="60dp"
-        android:backgroundTint="#e06f1f"
+        android:backgroundTint="@color/buttonColor"
         android:text="@string/upload_from_gallery"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toEndOf="@id/chooseBtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="#9d5716"
+        app:strokeColor="@color/buttonBorderColor"
         app:strokeWidth="4dp" />
 
     <ImageView
@@ -54,14 +54,14 @@
         android:layout_width="114dp"
         android:layout_height="88dp"
         android:layout_marginTop="200dp"
-        android:backgroundTint="#e06f1f"
+        android:backgroundTint="@color/buttonColor"
         android:text="Save results"
         app:layout_constraintEnd_toStartOf="@id/viewResultsBtn"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.873"
-        app:strokeColor="#9d5716"
+        app:strokeColor="@color/buttonBorderColor"
         app:strokeWidth="4dp" />
 
     <Button
@@ -73,8 +73,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/saveResultsBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="#9d5716"
-        android:backgroundTint="#e06f1f"
+        app:strokeColor="@color/buttonBorderColor"
+        android:backgroundTint="@color/buttonColor"
         app:strokeWidth="4dp"
         />
 
