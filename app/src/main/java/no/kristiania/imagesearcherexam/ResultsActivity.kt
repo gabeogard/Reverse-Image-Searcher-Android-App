@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,15 +42,15 @@ class ResultsActivity : AppCompatActivity() {
                 for (i in resultList){
                     Log.d("LINK", i.resultOne.toString())
                 }
-                runOnUiThread {
-                    setUpList(resultList)
+                lifecycleScope.launch {
+                    setUpList(resultList, dao)
                 }
             }
         }
 
     }
 
-    private fun setUpList(list: List<ResultItem>) {
+    private fun setUpList(list: List<ResultItem>, dao: ResponseDAO) {
         if (list.isNotEmpty()) {
             val itemAdapter = ResultItemAdapter(list)
             binding?.rvResults?.layoutManager = LinearLayoutManager(this)
@@ -61,6 +62,7 @@ class ResultsActivity : AppCompatActivity() {
         }
     }
 }
+
 
 private fun ByteArray.toBitmap(): Bitmap =
     kotlin.runCatching { BitmapFactory.decodeByteArray(this, 0, this.size) }.getOrThrow()

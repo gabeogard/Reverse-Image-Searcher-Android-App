@@ -107,6 +107,7 @@ class SearchActivity : AppCompatActivity() {
 
         binding?.saveResultsBtn?.setOnClickListener {
             if (responseEntry != null) saveSearchResults(dao)
+            it.visibility = View.GONE
         }
 
         binding?.viewResultsBtn?.setOnClickListener {
@@ -165,7 +166,7 @@ class SearchActivity : AppCompatActivity() {
                             resultTwo = resultList[1].image_link,
                             resultThree = resultList[2].image_link
                         )
-
+                        binding?.saveResultsBtn?.visibility = View.VISIBLE
                         cancelProgressDialog()
                     } else {
                         Toast.makeText(

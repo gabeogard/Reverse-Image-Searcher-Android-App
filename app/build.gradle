@@ -45,9 +45,7 @@ dependencies {
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-
-
-
+    
     //noinspection GradleDependency
     implementation 'androidx.room:room-runtime:2.3.0'
     //noinspection GradleDependency
