@@ -27,7 +27,7 @@ class ResultItemAdapter(private val items: List<ResultItem>):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.ivSearched.setImageURI(items[position].searchedItem.toUri())
+        holder.ivSearched.setImageBitmap(items[position].searchedItem)
         holder.ivResultOne.setImageBitmap(items[position].resultOne)
         holder.ivResultTwo.setImageBitmap(items[position].resultTwo)
         holder.ivResultThree.setImageBitmap(items[position].resultThree)

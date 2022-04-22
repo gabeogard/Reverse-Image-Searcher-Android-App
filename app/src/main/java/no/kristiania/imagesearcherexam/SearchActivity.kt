@@ -34,6 +34,7 @@ import org.json.JSONArray
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.NullPointerException
 
 class SearchActivity : AppCompatActivity() {
     private var binding: ActivitySearchBinding? = null
@@ -87,18 +88,17 @@ class SearchActivity : AppCompatActivity() {
         binding?.uploadBtn?.setOnClickListener {
             if (uploadedPic) {
                 showProgressDialog()
-
-                val resultUrl: Deferred<String> = GlobalScope.async {
-                    uploadImage()
-                }
-
-
+                val resultUrl: Deferred<String> = GlobalScope.async { uploadImage() }
                 GlobalScope.launch(Dispatchers.Main) {
-
                     resultUrl.await().run {
-                        Log.d("THIS", this)
-                        imageSearch(this)
-                    }
+                        if (this.isNotEmpty()){
+                            imageSearch(this)
+                        }else{
+                            cancelProgressDialog()
+                            Toast.makeText(this@SearchActivity,
+                                "Failed to upload - please try again with a different picture",
+                                Toast.LENGTH_LONG).show()
+                        }}
                     it.isEnabled = true
                 }
                 it.isEnabled = false
@@ -106,9 +106,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         binding?.saveResultsBtn?.setOnClickListener {
-            if (responseEntry != null) {
-                saveSearchResults(dao)
-            }
+            if (responseEntry != null) saveSearchResults(dao)
         }
 
         binding?.viewResultsBtn?.setOnClickListener {
@@ -119,30 +117,34 @@ class SearchActivity : AppCompatActivity() {
 
     private fun saveSearchResults(dao: ResponseDAO) {
         lifecycleScope.launch {
-            dao.insert(responseEntry!!)
+            responseEntry?.run { dao.insert(this) }
         }
     }
 
-    /**
-     * Uses Coroutines to launch different thread
-     * Uses Android Networking to upload to "http://api-edu.gtl.ai/"
-     * Returns response as String
-    // **/
+
     private fun uploadImage(): String {
         val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
         val uploadFile = File(f)
-        return AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
-            .addMultipartFile("image", uploadFile)
-            .addMultipartParameter("Content-Type", "image/png")
-            .addMultipartParameter("Content-Disposition", "form-data")
-            .setPriority(Priority.HIGH)
-            .build()
-            .executeForString().result.toString()
+        var returned: String = ""
+        returned = try {
+            AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
+                .addMultipartFile("image", uploadFile)
+                .addMultipartParameter("Content-Type", "image/png")
+                .addMultipartParameter("Content-Disposition", "form-data")
+                .setPriority(Priority.HIGH)
+                .build()
+                .executeForString().result.toString()
+        }catch (e: NullPointerException){
+            ""
+        }
+        return returned
     }
 
     private fun imageSearch(currentPicUrl: String) {
-        AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/tineye")
+        val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
+        val f = File(createImageFromBitmap(getBitmapFromView(uploadImage)))
+        AndroidNetworking.get("http://api-edu.gtl.ai/api/v1/imagesearch/bing")
             .addQueryParameter("url", currentPicUrl)
             .setPriority(Priority.HIGH)
             .build()
@@ -155,31 +157,27 @@ class SearchActivity : AppCompatActivity() {
                     if (responseList!!.isNotEmpty()) {
                         responseList?.forEach {
                             resultList.add(it)
+                            Log.d("Top result", it.image_link)
                         }
                         responseEntry = ResponseEntity(
-                            searchedImage = currentSearchedImage!!,
+                            searchedImage = f.readBytes(),
                             resultOne = resultList[0].image_link,
                             resultTwo = resultList[1].image_link,
                             resultThree = resultList[2].image_link
                         )
+
                         cancelProgressDialog()
                     } else {
-                        responseEntry = ResponseEntity(
-                            searchedImage = currentSearchedImage!!,
-                            resultOne = null,
-                            resultTwo = null,
-                            resultThree = null
-                        )
                         Toast.makeText(
                             this@SearchActivity,
                             "No similar images found - Server might be facing some" +
                                     " issues. Please try again!",
                             Toast.LENGTH_LONG
                         ).show()
+                        cancelProgressDialog()
                     }
                     binding?.viewResultsBtn?.visibility = View.VISIBLE
-                    Log.d("Image link: ", responseEntry?.resultOne.toString())
-                    cancelProgressDialog()
+
                 }
 
                 override fun onError(anError: ANError?) {

@@ -13,4 +13,5 @@
     <string name="result_1">Result #1</string>
     <string name="result_2">Result #2</string>
     <string name="result_3">Result #3</string>
+    <string name="saved_image_search_results">Saved Image-search Results</string>
 </resources>
