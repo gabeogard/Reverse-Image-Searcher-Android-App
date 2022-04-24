@@ -127,8 +127,7 @@ class SearchActivity : AppCompatActivity() {
         val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
         val uploadFile = File(f)
-        var returned: String = ""
-        returned = try {
+        val returned: String = try {
             AndroidNetworking.upload("http://api-edu.gtl.ai/api/v1/imagesearch/upload")
                 .addMultipartFile("image", uploadFile)
                 .addMultipartParameter("Content-Type", "image/png")

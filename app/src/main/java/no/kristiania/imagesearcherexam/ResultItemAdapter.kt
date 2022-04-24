@@ -1,5 +1,6 @@
 package no.kristiania.imagesearcherexam
 
+import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 class ResultItemAdapter(
-    private val items: List<ResultItem>
+    private val items: List<ResultItem>,
+    private val updateListener:(view:ImageView, title:String)->Unit
 ) :
     RecyclerView.Adapter<ResultItemAdapter.ViewHolder>() {
 
@@ -42,6 +45,19 @@ class ResultItemAdapter(
                     R.color.salmon
                 )
             )
+        }
+
+        holder.ivSearched.setOnClickListener {
+            updateListener.invoke(it as ImageView, "Searched Image")
+        }
+        holder.ivResultOne.setOnClickListener {
+            updateListener.invoke(it as ImageView, "Result #1")
+        }
+        holder.ivResultTwo.setOnClickListener {
+            updateListener.invoke(it as ImageView, "Result #2")
+        }
+        holder.ivResultThree.setOnClickListener {
+            updateListener.invoke(it as ImageView, "Result #3")
         }
 
     }

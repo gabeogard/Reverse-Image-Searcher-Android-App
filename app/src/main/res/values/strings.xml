@@ -15,4 +15,7 @@
     <string name="result_3">Result #3</string>
     <string name="saved_image_search_results">Saved Image-search Results</string>
     <string name="save_results">Save results</string>
+    <string name="about">about</string>
+    <string name="image_searcher_app">Image searcher app</string>
+    <string name="upload_your_image_and_see_the_three_most_similar_images_on_the_world_wide_web">Upload your image and see the three most similar images on the World Wide Web.</string>
 </resources>

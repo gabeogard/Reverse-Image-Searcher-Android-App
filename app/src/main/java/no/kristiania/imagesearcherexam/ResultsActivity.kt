@@ -1,22 +1,22 @@
 package no.kristiania.imagesearcherexam
 
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import no.kristiania.imagesearcherexam.databinding.ActivityResultsBinding
+import no.kristiania.imagesearcherexam.databinding.DialogFullscreenBinding
 import no.kristiania.imagesearcherexam.roomdb.ResponseApp
 import no.kristiania.imagesearcherexam.roomdb.ResponseDAO
-import no.kristiania.imagesearcherexam.roomdb.ResponseEntity
-import java.io.IOException
 import java.net.URL
 
 class ResultsActivity : AppCompatActivity() {
@@ -52,7 +52,9 @@ class ResultsActivity : AppCompatActivity() {
 
     private fun setUpList(list: List<ResultItem>, dao: ResponseDAO) {
         if (list.isNotEmpty()) {
-            val itemAdapter = ResultItemAdapter(list)
+            val itemAdapter = ResultItemAdapter(list,{
+                    imageView, title -> fullScreenDialog(imageView, title)
+            })
             binding?.rvResults?.layoutManager = LinearLayoutManager(this)
             binding?.rvResults?.adapter = itemAdapter
             binding?.rvResults?.visibility = View.VISIBLE
@@ -60,6 +62,16 @@ class ResultsActivity : AppCompatActivity() {
             binding?.rvResults?.visibility = View.GONE
             Toast.makeText(this, "No data stored, try again later", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun fullScreenDialog(view: ImageView, title: String) {
+        val fullScreenDialog = Dialog(this, R.style.Theme_Dialog)
+        fullScreenDialog.setCancelable(true)
+        val binding = DialogFullscreenBinding.inflate(layoutInflater)
+        fullScreenDialog.setContentView(binding.root)
+        binding.ivFullScreenImage.setImageDrawable(view.drawable)
+        binding.tvTitle.text = title
+        fullScreenDialog.show()
     }
 }
 
