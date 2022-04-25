@@ -6,6 +6,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:padding="3dp"
+    android:background="@drawable/background_for_app"
+
 
 
     >
@@ -27,6 +30,7 @@
             android:id="@+id/tvSearched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="@string/searched_img"/>
     </LinearLayout>
 
@@ -46,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/result_1"
+            android:textStyle="bold"
             android:layout_gravity="center"/>
     </LinearLayout>
     <LinearLayout
@@ -63,6 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="@string/result_2"
             android:layout_gravity="center"/>
     </LinearLayout>
@@ -82,6 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/result_3"
+            android:textStyle="bold"
             android:layout_gravity="center"/>
     </LinearLayout>
 
