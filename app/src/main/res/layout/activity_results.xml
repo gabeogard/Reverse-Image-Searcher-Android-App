@@ -5,21 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ResultsActivity"
+    android:background="#ffe3c8"
     >
 
     <TextView
         android:id="@+id/tvResultsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/saved_image_search_results"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rvResults"
         android:layout_marginBottom="5dp"
+        android:shadowColor="#352C2C"
+        android:text="@string/saved_image_search_results"
         android:textSize="30sp"
         android:textStyle="bold"
-        />
+        app:layout_constraintBottom_toTopOf="@id/rvResults"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResults"

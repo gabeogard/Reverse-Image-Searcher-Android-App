@@ -10,11 +10,14 @@
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/dialog_fullscreen.xml" value="0.28940217391304346" />
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/dialog_info.xml" value="0.28940217391304346" />
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/recycler_view_list_item.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/border_image.xml" value="0.1359375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3637327843148253" />
         <entry key="app/src/main/res/layout/activity_results.xml" value="0.3012662592596818" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.2721020673494628" />
         <entry key="app/src/main/res/layout/custom_progress_dialog.xml" value="0.11667291368275011" />
         <entry key="app/src/main/res/layout/dialog_fullscreen.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/dialog_info.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/recycler_view_list_item.xml" value="0.3133514986376022" />
       </map>
     </option>
   </component>
