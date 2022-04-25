@@ -4,54 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffe3c8"
+    android:background="@drawable/background_for_app"
     tools:context=".MainActivity">
 
-    <Button
+
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="10dp"
         android:id="@+id/searchBtn"
-        android:backgroundTint="#e06f1f"
-        app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
         android:layout_width="114dp"
         android:layout_height="88dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="276dp"
+        android:backgroundTint="@color/buttonColor"
+        android:fontFamily="@font/roboto"
         android:text="@string/search_image"
         app:layout_constraintEnd_toStartOf="@+id/savedResultsBtn"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/buttonBorderColor"
+        app:strokeWidth="1dp"
+    />
 
-
-
-    <Button
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="10dp"
         android:id="@+id/savedResultsBtn"
-        android:backgroundTint="#e06f1f"
-        app:strokeColor="#9d5716"
-        app:strokeWidth="4dp"
         android:layout_width="114dp"
         android:layout_height="88dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="276dp"
+        android:backgroundTint="@color/buttonColor"
+        android:fontFamily="@font/roboto"
         android:text="@string/saved_results"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toEndOf="@id/searchBtn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/buttonBorderColor"
+        app:strokeWidth="1dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:rotationX="40"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/image_searcher"
-        android:textColor="@color/design_default_color_on_secondary"
-        android:textSize="50sp"
+        android:textColor="#FF5F1F"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
+        app:cornerRadius="10dp"
         android:id="@+id/infoFab"
+        android:backgroundTint="@color/buttonColor"
+        app:strokeColor="@color/buttonBorderColor"
+        app:strokeWidth="1dp"
+        android:fontFamily="@font/roboto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about"

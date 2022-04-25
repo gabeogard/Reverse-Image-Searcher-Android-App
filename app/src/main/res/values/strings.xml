@@ -5,7 +5,7 @@
     <string name="view_results">view results</string>
     <string name="saved_results">saved results</string>
     <string name="search_results">search results</string>
-    <string name="upload_from_gallery">Upload from gallery</string>
+    <string name="upload_from_gallery">Upload</string>
     <string name="choose_from_gallery">choose from gallery</string>
     <string name="this_might_take_a_minute">This might take a minute...</string>
     <string name="image_searcher">Image Searcher</string>
@@ -13,7 +13,7 @@
     <string name="result_1">Result #1</string>
     <string name="result_2">Result #2</string>
     <string name="result_3">Result #3</string>
-    <string name="saved_image_search_results">Saved Image-search Results</string>
+    <string name="saved_image_search_results">Saved Results</string>
     <string name="save_results">Save results</string>
     <string name="about">about</string>
     <string name="image_searcher_app">Image searcher app</string>

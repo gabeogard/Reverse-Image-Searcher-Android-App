@@ -1,15 +1,18 @@
 package no.kristiania.imagesearcherexam
 
 import android.app.Dialog
+import android.util.Property
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.NonDisposableHandle.parent
+import kotlin.random.Random
 
 class ResultItemAdapter(
     private val items: List<ResultItem>,
@@ -23,7 +26,10 @@ class ResultItemAdapter(
         val ivResultOne: ImageView = view.findViewById(R.id.ivResultOne)
         val ivResultTwo: ImageView = view.findViewById(R.id.ivResultTwo)
         val ivResultThree: ImageView = view.findViewById(R.id.ivResultThree)
-        val ivDelete: ImageView = view.findViewById(R.id.ivDelete)
+
+
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +43,8 @@ class ResultItemAdapter(
         holder.ivResultOne.setImageBitmap(items[position].resultOne)
         holder.ivResultTwo.setImageBitmap(items[position].resultTwo)
         holder.ivResultThree.setImageBitmap(items[position].resultThree)
+
+
 
         if (position % 2 == 0) {
             holder.llMain.setBackgroundColor(
@@ -60,9 +68,14 @@ class ResultItemAdapter(
             updateListener.invoke(it as ImageView, "Result #3")
         }
 
+
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
+
+
+
+
 }
