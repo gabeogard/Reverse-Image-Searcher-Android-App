@@ -8,6 +8,7 @@
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/activity_search.xml" value="0.19427083333333334" />
         <entry key="..\:/Software/ImageSearcherExam/app/src/main/res/layout/custom_progress_dialog.xml" value="0.23550724637681159" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21875" />
+        <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/drawable/appbar.xml" value="0.21875" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/drawable/background_for_app.xml" value="0.25" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/drawable/background_resultview.xml" value="0.2203125" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/drawable/border_image.xml" value="0.21875" />
@@ -17,10 +18,11 @@
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/activity_results.xml" value="0.22" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/activity_search.xml" value="0.5" />
+        <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/appbar.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/custom_progress_dialog.xml" value="0.3625" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/dialog_fullscreen.xml" value="0.3625" />
         <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/dialog_info.xml" value="0.5" />
-        <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/recycler_view_list_item.xml" value="0.67" />
+        <entry key="..\:/Users/olive/StudioProjects/ImageSearcherExam/app/src/main/res/layout/recycler_view_list_item.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/background_for_app.xml" value="0.25416666666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/activity_results.xml" value="0.18892597706277367" />
@@ -30,7 +32,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

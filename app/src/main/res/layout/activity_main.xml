@@ -9,52 +9,37 @@
 
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="10dp"
         android:id="@+id/searchBtn"
         android:layout_width="114dp"
         android:layout_height="88dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="240dp"
         android:backgroundTint="@color/buttonColor"
         android:fontFamily="@font/roboto"
         android:text="@string/search_image"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toStartOf="@+id/savedResultsBtn"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/buttonBorderColor"
-        app:strokeWidth="1dp"
-    />
+        app:strokeWidth="1dp" />
+
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="10dp"
         android:id="@+id/savedResultsBtn"
         android:layout_width="114dp"
         android:layout_height="88dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="240dp"
         android:backgroundTint="@color/buttonColor"
         android:fontFamily="@font/roboto"
         android:text="@string/saved_results"
+        app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@id/searchBtn"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/buttonBorderColor"
         app:strokeWidth="1dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/image_searcher"
-        android:textColor="#FF5F1F"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         app:cornerRadius="10dp"

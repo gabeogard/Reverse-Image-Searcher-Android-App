@@ -26,6 +26,8 @@ class ResultsActivity : AppCompatActivity() {
         binding = ActivityResultsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding?.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title= "Image Searcher"
 
         val dao = (application as ResponseApp).db.responseDao()
 

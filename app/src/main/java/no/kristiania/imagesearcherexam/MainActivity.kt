@@ -4,12 +4,10 @@ import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import androidx.room.Room
+import androidx.appcompat.widget.DialogTitle
 import no.kristiania.imagesearcherexam.databinding.ActivityMainBinding
 import no.kristiania.imagesearcherexam.databinding.DialogInfoBinding
-import no.kristiania.imagesearcherexam.roomdb.ResponseApp
-import no.kristiania.imagesearcherexam.roomdb.ResponseDatabase
+
 
 class MainActivity : AppCompatActivity() {
     private var binding : ActivityMainBinding? = null
@@ -31,7 +29,12 @@ class MainActivity : AppCompatActivity() {
         binding?.infoFab?.setOnClickListener {
             infoDialog()
         }
+
+        title = "Image Searcher"
+
+
     }
+
 
     private fun infoDialog() {
         val infoDialog = Dialog(this)

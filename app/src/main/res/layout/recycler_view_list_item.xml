@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:padding="3dp"
-    android:background="@drawable/background_for_app"
+
 
 
 

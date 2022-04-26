@@ -40,11 +40,11 @@
 
     <ImageView
         android:id="@+id/imgSearchHolder"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/border_image"
         android:cropToPadding="true"
-        android:padding="6dp"
+        android:padding="2dp"
         android:scaleType="centerCrop"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"

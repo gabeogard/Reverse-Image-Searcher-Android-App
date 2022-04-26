@@ -61,6 +61,9 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title = "Image Searcher"
+
 
         val db = (application as ResponseApp).db
 
