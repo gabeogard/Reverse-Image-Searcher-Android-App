@@ -52,9 +52,9 @@ class ResultsActivity : AppCompatActivity() {
 
     private fun setUpList(list: List<ResultItem>, dao: ResponseDAO) {
         if (list.isNotEmpty()) {
-            val itemAdapter = ResultItemAdapter(list,{
-                    imageView, title -> fullScreenDialog(imageView, title)
-            })
+            val itemAdapter = ResultItemAdapter(list) { imageView, title ->
+                fullScreenDialog(imageView, title)
+            }
             binding?.rvResults?.layoutManager = LinearLayoutManager(this)
             binding?.rvResults?.adapter = itemAdapter
             binding?.rvResults?.visibility = View.VISIBLE
@@ -74,7 +74,6 @@ class ResultsActivity : AppCompatActivity() {
         fullScreenDialog.show()
     }
 }
-
 
 private fun ByteArray.toBitmap(): Bitmap =
     kotlin.runCatching { BitmapFactory.decodeByteArray(this, 0, this.size) }.getOrThrow()

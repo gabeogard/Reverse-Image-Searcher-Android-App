@@ -26,10 +26,6 @@ class ResultItemAdapter(
         val ivResultOne: ImageView = view.findViewById(R.id.ivResultOne)
         val ivResultTwo: ImageView = view.findViewById(R.id.ivResultTwo)
         val ivResultThree: ImageView = view.findViewById(R.id.ivResultThree)
-
-
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -67,15 +63,9 @@ class ResultItemAdapter(
         holder.ivResultThree.setOnClickListener {
             updateListener.invoke(it as ImageView, "Result #3")
         }
-
-
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
-
-
-
-
 }

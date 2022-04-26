@@ -70,6 +70,7 @@ class SearchActivity : AppCompatActivity() {
          * -Checks for and or asks for permission to read external storage on device
          * -Opens gallery
          * **/
+
         binding?.chooseBtn?.setOnClickListener {
             val checkSelfPermission = ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -184,9 +185,7 @@ class SearchActivity : AppCompatActivity() {
                     Log.e("Error", anError.toString())
                     cancelProgressDialog()
                 }
-
             })
-
     }
 
     private fun createImageFromBitmap(mBitmap: Bitmap): String {
