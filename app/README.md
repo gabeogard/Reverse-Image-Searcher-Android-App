@@ -2,6 +2,7 @@ ANDROID PROGRAMMING EXAM - (REVERSE IMAGE SEARCHER APP):
 =======================================================
 The app we have made lets you upload images from the gallery on your
 Android device to search for similar images on the internet.
+<img src="app/src/main/res/drawable-v24/homescreen.png">
 - First you upload images to an external server
   
 - Next, the server returns a image URL
