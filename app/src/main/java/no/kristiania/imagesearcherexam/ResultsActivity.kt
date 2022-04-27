@@ -29,6 +29,7 @@ class ResultsActivity : AppCompatActivity() {
 
         val dao = (application as ResponseApp).db.responseDao()
 
+        //Creates List from stored results and sends it to recycler view
         CoroutineScope(Dispatchers.IO).launch {
             dao.fetchAllResponses().collect {
                 val resultList: List<ResultItem> =
@@ -50,6 +51,7 @@ class ResultsActivity : AppCompatActivity() {
 
     }
 
+    //Sets up recyclerview with stored image search results
     private fun setUpList(list: List<ResultItem>, dao: ResponseDAO) {
         if (list.isNotEmpty()) {
             val itemAdapter = ResultItemAdapter(list,{
@@ -64,6 +66,7 @@ class ResultsActivity : AppCompatActivity() {
         }
     }
 
+    //Dialog box for fullscreen Image Views
     private fun fullScreenDialog(view: ImageView, title: String) {
         val fullScreenDialog = Dialog(this, R.style.Theme_Dialog)
         fullScreenDialog.setCancelable(true)
@@ -76,8 +79,10 @@ class ResultsActivity : AppCompatActivity() {
 }
 
 
+//Turns images stored on device from ByteArray to Bitmap (Throws if something is wrong)
 private fun ByteArray.toBitmap(): Bitmap =
     kotlin.runCatching { BitmapFactory.decodeByteArray(this, 0, this.size) }.getOrThrow()
 
+//Turns image URL's stored on device from URL to Bitmap (Throws if something is wrong)
 private fun URL.toBitmap(): Bitmap =
     kotlin.runCatching { BitmapFactory.decodeStream(openStream()) }.getOrThrow()

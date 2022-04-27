@@ -123,6 +123,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
 
+    //Uploads selected image to server and returns img url
     private fun uploadImage(): String {
         val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
         val f = createImageFromBitmap(getBitmapFromView(uploadImage))
@@ -141,6 +142,7 @@ class SearchActivity : AppCompatActivity() {
         return returned
     }
 
+    //Sends returned image url from file upload to API that returns similar images
     private fun imageSearch(currentPicUrl: String) {
         val uploadImage: ImageView = findViewById(R.id.imgSearchHolder)
         val f = File(createImageFromBitmap(getBitmapFromView(uploadImage)))

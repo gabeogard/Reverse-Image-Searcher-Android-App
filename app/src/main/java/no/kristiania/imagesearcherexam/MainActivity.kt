@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Info dialog box with info about app
     private fun infoDialog() {
         val infoDialog = Dialog(this)
         val binding = DialogInfoBinding.inflate(layoutInflater)
