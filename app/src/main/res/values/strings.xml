@@ -18,4 +18,11 @@
     <string name="about">about</string>
     <string name="image_searcher_app">Image searcher app</string>
     <string name="upload_your_image_and_see_the_three_most_similar_images_on_the_world_wide_web">Upload your image and see the three most similar images on the World Wide Web.</string>
+    <string name="image_search_holder">image search holder</string>
+    <string name="title">TITLE</string>
+    <string name="full_screen_image_view">full screen image view</string>
+    <string name="searched_image">searched image</string>
+    <string name="result_one_image_view">result one image view</string>
+    <string name="result_two_image_view">result two image view</string>
+    <string name="result_three_image_view">result three image view</string>
 </resources>
