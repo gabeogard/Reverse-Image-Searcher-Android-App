@@ -64,7 +64,6 @@ class SearchActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = "Image Searcher"
 
-
         val db = (application as ResponseApp).db
 
         val dao = db.responseDao()
@@ -156,14 +155,12 @@ class SearchActivity : AppCompatActivity() {
             .build()
             .getAsJSONArray(object : JSONArrayRequestListener {
                 override fun onResponse(response: JSONArray?) {
-                    Log.d("Response: ", currentPicUrl)
                     val mapper = jacksonObjectMapper()
                     responseList = mapper.readValue(response.toString())
                     val resultList: ArrayList<JsonResponseModel> = ArrayList()
                     if (responseList!!.isNotEmpty()) {
                         responseList?.forEach {
                             resultList.add(it)
-                            Log.d("Top result", it.image_link)
                         }
                         responseEntry = ResponseEntity(
                             searchedImage = f.readBytes(),

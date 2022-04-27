@@ -34,15 +34,14 @@ class ResultsActivity : AppCompatActivity() {
             dao.fetchAllResponses().collect {
                 val resultList: List<ResultItem> =
                     it.map { response ->
-                        ResultItem(response.searchedImage.toBitmap(),
+                        ResultItem(
+                            response.searchedImage.toBitmap(),
                             URL(response.resultOne).toBitmap(),
                             URL(response.resultTwo).toBitmap(),
-                            URL(response.resultThree).toBitmap())
+                            URL(response.resultThree).toBitmap()
+                        )
                     }.toList()
 
-                for (i in resultList){
-                    Log.d("LINK", i.resultOne.toString())
-                }
                 lifecycleScope.launch {
                     setUpList(resultList, dao)
                 }
@@ -54,8 +53,8 @@ class ResultsActivity : AppCompatActivity() {
     //Sets up recyclerview with stored image search results
     private fun setUpList(list: List<ResultItem>, dao: ResponseDAO) {
         if (list.isNotEmpty()) {
-            val itemAdapter = ResultItemAdapter(list,{
-                    imageView, title -> fullScreenDialog(imageView, title)
+            val itemAdapter = ResultItemAdapter(list, { imageView, title ->
+                fullScreenDialog(imageView, title)
             })
             binding?.rvResults?.layoutManager = LinearLayoutManager(this)
             binding?.rvResults?.adapter = itemAdapter

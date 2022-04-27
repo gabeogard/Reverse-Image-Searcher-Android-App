@@ -12,7 +12,7 @@ import no.kristiania.imagesearcherexam.roomdb.ResponseApp
 import no.kristiania.imagesearcherexam.roomdb.ResponseDatabase
 
 class MainActivity : AppCompatActivity() {
-    private var binding : ActivityMainBinding? = null
+    private var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -8,7 +8,7 @@ import no.kristiania.imagesearcherexam.api.JsonResponseModel
 import java.sql.Types.BLOB
 
 @Entity(tableName = "result-table")
-data class ResponseEntity (
+data class ResponseEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "Original Image", typeAffinity = ColumnInfo.BLOB)

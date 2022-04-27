@@ -16,7 +16,7 @@ import kotlin.random.Random
 
 class ResultItemAdapter(
     private val items: List<ResultItem>,
-    private val updateListener:(view:ImageView, title:String)->Unit
+    private val updateListener: (view: ImageView, title: String) -> Unit
 ) :
     RecyclerView.Adapter<ResultItemAdapter.ViewHolder>() {
 
