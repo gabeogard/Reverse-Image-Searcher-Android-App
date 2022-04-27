@@ -21,5 +21,4 @@ interface ResponseDAO {
     @Query("SELECT * FROM `result-table` where id=:id")
     fun fetchAllResponsesById(id: Int): Flow<ResponseEntity>
 
-
 }
