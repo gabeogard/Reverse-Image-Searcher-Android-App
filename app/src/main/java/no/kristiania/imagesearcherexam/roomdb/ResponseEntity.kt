@@ -2,10 +2,7 @@ package no.kristiania.imagesearcherexam.roomdb
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import no.kristiania.imagesearcherexam.api.JsonResponseModel
-import java.sql.Types.BLOB
 
 @Entity(tableName = "result-table")
 data class ResponseEntity(
