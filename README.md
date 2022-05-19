@@ -1,6 +1,6 @@
 Reverse Image Searcher App for Android
 =======================================================
-PGR208 (Android Programming) Exam:
+**PGR208 (Android Programming) Final Exam**
 
 Dependencies and libraries used:
 - Fast Android Networking (https://github.com/amitshekhariitbhu/Fast-Android-Networking)
