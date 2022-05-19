@@ -1,5 +1,11 @@
 ANDROID PROGRAMMING EXAM - (REVERSE IMAGE SEARCHER APP):
 =======================================================
+
+Dependencies and libraries used:
+- Fast Android Networking (https://github.com/amitshekhariitbhu/Fast-Android-Networking)
+- Jackson Module Kotlin(https://github.com/FasterXML/jackson/)
+- Android Room Database for storing search results locally on device. 
+
 The app we have made lets you upload images from the gallery on your
 Android device to search for similar images on the internet.
 
@@ -32,9 +38,3 @@ The upload feature currently only allows for PNG files. If no similar images are
 try uploading a different image or give it a few minutes and try the same one again.
 Server has been facing minor difficulties.
 
-Dependencies and libraries used:
-- Fast Android Networking (https://github.com/amitshekhariitbhu/Fast-Android-Networking)
-  -To upload images to server and send get-request to API
-- Jackson Module Kotlin(https://github.com/FasterXML/jackson/)
-  -To parse JSONArray of JSONOBjects with images in get-request response.
-- Android Room Database for storing search results locally on device. 
