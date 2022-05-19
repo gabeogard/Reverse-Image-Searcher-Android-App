@@ -7,6 +7,8 @@ Dependencies and libraries used:
 - Jackson Module Kotlin(https://github.com/FasterXML/jackson/)
 - Android Room Database for storing search results locally on device. 
 
+Primitive UI due to time constraints, should (but probably won't) update. 
+
 The app we have made lets you upload images from the gallery on your
 Android device to search for similar images on the internet.
 
